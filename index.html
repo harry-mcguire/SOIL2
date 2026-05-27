@@ -1,0 +1,1022 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgroSoil AI | Cloud Connected Agriculture Suite</title>
+    <style>
+        /* Modern Reset and Typography */
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght=400;500;600;700;800&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+        }
+
+        :root {
+            --primary: #15803d;
+            --primary-dark: #14532d;
+            --primary-light: #bbf7d0;
+            --secondary: #10b981;
+            --accent-amber: #d97706;
+            --accent-red: #dc2626;
+            --bg-main: #f4f7f5;
+            --surface: #ffffff;
+            --text-dark: #0f172a;
+            --text-muted: #475569;
+            --border: #e2e8f0;
+            
+            /* Element Specific Color Palette */
+            --nitro-blue: #2563eb;
+            --nitro-bg: #eff6ff;
+            --phos-orange: #ea580c;
+            --phos-bg: #fff5ed;
+            --potas-crimson: #be123c;
+            --potas-bg: #fff1f2;
+        }
+
+        body.dark {
+            --bg-main: #0f172a;
+            --surface: #1e293b;
+            --text-dark: #f8fafc;
+            --text-muted: #94a3b8;
+            --border: #334155;
+            --primary-light: #14532d;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-dark);
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        nav {
+            background-color: var(--surface);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.03);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-container {
+            max-width: 1500px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 24px;
+            gap: 16px;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--primary);
+            text-decoration: none;
+            letter-spacing: -0.5px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            white-space: nowrap;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            scrollbar-width: none;
+            -webkit-overflow-scrolling: touch;
+        }
+        .nav-links::-webkit-scrollbar {
+            display: none;
+        }
+
+        .nav-links button, .utility-btn {
+            background: none;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 10px;
+            color: var(--text-muted);
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+
+        .nav-links button:hover, .utility-btn:hover {
+            color: var(--primary);
+            background-color: rgba(21, 128, 61, 0.1);
+        }
+
+        .nav-links button.active-nav {
+            color: var(--surface);
+            background-color: var(--primary);
+        }
+
+        .dark-toggle-btn {
+            background: var(--bg-main);
+            border: 1px solid var(--border);
+            border-radius: 50%;
+            width: 42px;
+            height: 42px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            flex-shrink: 0;
+        }
+
+        .role-badge {
+            font-size: 0.75rem;
+            font-weight: 800;
+            padding: 4px 10px;
+            border-radius: 6px;
+            text-transform: uppercase;
+        }
+        .role-developer { background-color: #d97706; color: #ffffff; }
+        .role-farmer { background-color: var(--primary); color: #ffffff; }
+
+        .app-page {
+            display: none;
+            animation: fadeInPage 0.4s ease forwards;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 24px 16px 80px 16px;
+        }
+
+        .app-page.active-page { display: block; }
+
+        @keyframes fadeInPage {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .panel-box {
+            background: var(--surface);
+            border-radius: 20px;
+            padding: 24px;
+            border: 1px solid var(--border);
+            box-shadow: 0 10px 25px -5px rgba(0,0,0,0.02);
+            margin-bottom: 24px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        @media (min-width: 768px) {
+            .panel-box { padding: 30px; }
+            .app-page { padding: 30px 24px 80px 24px; }
+        }
+
+        .panel-box h2, .panel-box h3 {
+            color: var(--text-dark);
+            margin-bottom: 16px;
+        }
+
+        header {
+            background: linear-gradient(135deg, rgba(21, 128, 61, 0.08) 0%, rgba(16, 185, 129, 0.05) 100%);
+            border-radius: 24px;
+            padding: 40px 20px;
+            text-align: center;
+            border: 1px solid rgba(21, 128, 61, 0.1);
+            margin-bottom: 24px;
+        }
+
+        @media (min-width: 768px) { header { padding: 50px 32px; } }
+
+        .hero-title { font-size: 2rem; font-weight: 800; letter-spacing: -1px; margin-bottom: 10px; line-height: 1.2; }
+        .hero-subtitle { font-size: 0.85rem; color: var(--secondary); text-transform: uppercase; letter-spacing: 3px; font-weight: 800; margin-bottom: 24px;}
+
+        @media (min-width: 768px) {
+            .hero-title { font-size: 2.8rem; }
+            .hero-subtitle { font-size: 1rem; }
+        }
+
+        .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 24px; }
+        .analyzer-grid { display: grid; grid-template-columns: 1fr; gap: 24px; }
+
+        @media (min-width: 992px) { .analyzer-grid { grid-template-columns: 1fr 1.2fr; gap: 32px; } }
+
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; font-weight: 700; margin-bottom: 8px; font-size: 0.9rem; color: var(--text-muted); }
+        
+        .input-field {
+            width: 100%;
+            padding: 14px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            background-color: var(--bg-main);
+            color: var(--text-dark);
+            font-size: 1rem;
+            outline: none;
+        }
+        .input-field:focus { border-color: var(--primary); }
+
+        .input-slider-wrapper { display: flex; align-items: center; gap: 16px; }
+        input[type="range"] { flex: 1; accent-color: var(--primary); cursor: pointer; height: 8px; border-radius: 4px; }
+        .slider-val { background: var(--bg-main); padding: 6px 12px; border-radius: 8px; font-weight: 700; min-width: 75px; text-align: center; font-size: 0.85rem;}
+
+        .action-btn {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white; border: none; width: 100%; padding: 14px; border-radius: 12px;
+            font-weight: 700; font-size: 1rem; cursor: pointer; box-shadow: 0 4px 12px rgba(21, 128, 61, 0.2);
+            display: inline-flex; align-items: center; justify-content: center; gap: 8px; margin-top: auto;
+        }
+        .action-btn:hover { transform: translateY(-1px); box-shadow: 0 6px 16px rgba(21, 128, 61, 0.3); }
+        .action-btn:disabled { background: #94a3b8; cursor: not-allowed; box-shadow: none; }
+
+        .toggle-auth-mode {
+            color: var(--primary);
+            font-weight: 700;
+            font-size: 0.9rem;
+            text-align: center;
+            margin-top: 16px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .toggle-auth-mode:hover { text-decoration: underline; }
+
+        .learn-more-link {
+            color: var(--primary);
+            font-weight: 700;
+            font-size: 0.9rem;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            margin-top: 14px;
+            cursor: pointer;
+            width: fit-content;
+        }
+        .learn-more-link:hover { text-decoration: underline; color: var(--primary-dark); }
+
+        .report-metric { background: var(--surface); padding: 16px; border-radius: 14px; margin-bottom: 16px; border-left: 5px solid var(--border); box-shadow: 0 2px 8px rgba(0,0,0,0.01); }
+        .report-metric h4 { font-weight: 700; margin-bottom: 4px; font-size: 1rem; }
+        .report-metric p { font-size: 0.88rem; color: var(--text-muted); line-height: 1.5; }
+        
+        @media (min-width: 768px) {
+            .report-metric { padding: 20px; }
+            .report-metric h4 { font-size: 1.1rem; }
+        }
+
+        .report-metric.level-low { border-left-color: var(--accent-red); background-color: rgba(220, 38, 38, 0.03); }
+        .report-metric.level-optimal { border-left-color: var(--secondary); background-color: rgba(16, 185, 129, 0.03); }
+        .report-metric.level-high { border-left-color: var(--accent-amber); background-color: rgba(217, 119, 6, 0.03); }
+        .report-metric.level-fix { border-left-color: #7c3aed; background-color: rgba(124, 58, 237, 0.03); }
+
+        .section-title { font-size: 1.3rem; font-weight: 800; color: var(--text-dark); margin: 24px 0 16px 0; display: flex; align-items: center; gap: 10px; }
+        @media (min-width: 768px) { .section-title { font-size: 1.6rem; margin: 30px 0 20px 0; } }
+
+        .edu-badge { display: inline-block; padding: 4px 10px; border-radius: 8px; font-size: 0.75rem; font-weight: 800; text-transform: uppercase; margin-bottom: 12px; width: fit-content; }
+        .badge-struct { background: #f0fdf4; color: #166534; }
+        .badge-scheme { background: #eff6ff; color: #1e40af; }
+
+        .tips-carousel { background: linear-gradient(90deg, var(--primary-dark) 0%, #064e3b 100%); color: white; padding: 16px; border-radius: 16px; margin-bottom: 24px; position: relative; }
+        @media (min-width: 768px) { .tips-carousel { padding: 20px; } }
+        .carousel-track { display: flex; overflow: hidden; }
+        .carousel-item { min-width: 100%; display: none; font-weight: 600; font-size: 0.95rem; line-height: 1.5; }
+        @media (min-width: 768px) { .carousel-item { font-size: 1.05rem; } }
+        .carousel-item.active { display: block; animation: fadeInPage 0.5s ease; }
+
+        .security-gate { text-align: center; max-width: 500px; margin: 40px auto; padding: 30px 20px; }
+        .lock-icon { font-size: 3.5rem; margin-bottom: 16px; display: inline-block; animation: pulseLock 2s infinite ease-in-out; }
+        @keyframes pulseLock { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.08); } }
+
+        /* Modern Educational Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(4px);
+            z-index: 1000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+        }
+        .modal-overlay.active { display: flex; }
+        .modal-card {
+            background: var(--surface);
+            border-radius: 24px;
+            max-width: 650px;
+            width: 100%;
+            padding: 24px;
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25);
+            border: 1px solid var(--border);
+            position: relative;
+            max-height: 85vh;
+            overflow-y: auto;
+            animation: modalSlideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        @media (min-width: 768px) { .modal-card { padding: 32px; max-height: 90vh; } }
+        
+        .modal-close-btn {
+            position: absolute;
+            top: 20px; right: 20px;
+            background: var(--bg-main);
+            border: none;
+            width: 36px; height: 36px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: bold; color: var(--text-muted);
+        }
+        .modal-close-btn:hover { background: var(--border); color: var(--text-dark); }
+        .modal-body { margin-top: 16px; font-size: 0.95rem; color: var(--text-muted); }
+        .modal-section { margin-top: 16px; padding-top: 16px; border-top: 1px dashed var(--border); }
+        .modal-section ul { padding-left: 20px; margin-top: 8px; }
+        .modal-section li { margin-bottom: 6px; }
+
+        @media (max-width: 768px) {
+            .nav-container { flex-direction: column; align-items: stretch; padding: 12px 16px; gap: 12px; }
+            .logo { justify-content: center; }
+            .nav-links { justify-content: flex-start; padding-bottom: 4px; }
+            .nav-right { justify-content: space-between; border-top: 1px solid var(--border); padding-top: 10px; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="nav-container">
+            <a href="#" class="logo" onclick="switchPage('home')">🌱 AgroSoil AI</a>
+            <div class="nav-links">
+                <button class="nav-btn active-nav" id="btn-home" onclick="switchPage('home')">Home Dashboard</button>
+                <button class="nav-btn" id="btn-analyzer" onclick="switchPage('analyzer')">AI Soil Analyzer</button>
+                <button class="nav-btn" id="btn-planner" onclick="switchPage('planner')">Crop Planner</button>
+                <button class="nav-btn" id="btn-schemes" onclick="switchPage('schemes')">Govt Schemes</button>
+            </div>
+            <div class="nav-right">
+                <span id="navFarmerName" style="font-weight: 700; color: var(--text-dark); display: flex; align-items: center; gap: 8px; font-size: 0.9rem;"></span>
+                <button class="utility-btn" id="logoutBtn" style="display:none;" onclick="logoutFarmer()">Logout</button>
+                <button class="utility-btn" id="loginBtn" onclick="switchPage('login')">Login / Sign Up</button>
+                <button class="dark-toggle-btn" onclick="toggleDarkMode()">🌙</button>
+            </div>
+        </div>
+    </nav>
+
+    <main id="loginPage" class="app-page">
+        <div class="panel-box" style="max-width:450px; margin: 40px auto;">
+            <h2 id="authTitle" style="text-align: center;">Farmer Cloud Login</h2>
+            <p id="authSubtitle" style="color: var(--text-muted); text-align: center; margin-bottom: 24px; font-size: 0.9rem;">Cross-device agricultural tracking synced via global cloud endpoints.</p>
+            
+            <div class="form-group">
+                <label>Farmer Name / Username</label>
+                <input type="text" id="farmerName" class="input-field" placeholder="Enter Username">
+            </div>
+            <div class="form-group">
+                <label>Village Name</label>
+                <input type="text" id="farmerVillage" class="input-field" placeholder="Enter Local Village">
+            </div>
+            <div class="form-group">
+                <label>Security Password</label>
+                <input type="password" id="farmerPass" class="input-field" placeholder="••••••••">
+            </div>
+            
+            <button id="authActionButton" class="action-btn" onclick="handleAuthAction()">☁️ Secure Cloud Verification</button>
+            <a id="authToggleLink" class="toggle-auth-mode" onclick="toggleAuthMode()">Don't have an account? Sign Up here</a>
+        </div>
+    </main>
+
+    <main id="homePage" class="app-page active-page">
+        <div id="seasonalAlertBox">
+            <div class="report-metric level-high">
+                <h4>⚠️ Seasonal Monsoon Advisory</h4>
+                <p>Heavy localized regional rainfall expected. Reduce deep subsurface nitrogen spray loops this week to safeguard against runoff wash out patterns.</p>
+            </div>
+        </div>
+
+        <div class="tips-carousel">
+            <div class="carousel-track">
+                <div class="carousel-item active">💡 Tip: Rotate crops every alternate season to break pathogen lifecycles and fix ambient organic elements.</div>
+                <div class="carousel-item">💡 Tip: Avoid intensive over-fertilization; unassimilated input concentrations create salt-buildup toxicity layers.</div>
+                <div class="carousel-item">💡 Tip: Add matured organic compost layers every 45 days to optimize high-sponge root drainage dynamics.</div>
+                <div class="carousel-item">💡 Tip: Utilize precision localized drip irrigation to drop run-off soil displacement factors by up to 80%.</div>
+            </div>
+        </div>
+
+        <header>
+            <h1 class="hero-title">Predictive Agriculture Analytics</h1>
+            <p class="hero-subtitle">Harnessing AI Cloud Frameworks for Crop Longevity</p>
+            <p style="max-width: 750px; margin: 0 auto; color: var(--text-muted); font-size: 0.95rem;">
+                Welcome to an integrated agronomy interface. Map environmental data metrics, trace field chemical behaviors, and implement dynamic configurations across all your devices.
+            </p>
+        </header>
+
+        <div class="section-title"><span>🌱</span> Soil Physical Properties & Salinity Deep-Dive</div>
+        <div class="grid-3">
+            <div class="panel-box">
+                <span class="edu-badge badge-struct">Texture Fractions</span>
+                <h3 style="font-size:1.2rem;">Sand, Silt, & Clay Ratios</h3>
+                <p style="color: var(--text-muted); font-size: 0.9rem; line-height:1.6; margin-bottom:12px;">
+                    Soil physical matrices are categorized by explicit particle structural diameters: Sand (2.0–0.05 mm), Silt (0.05–0.002 mm), and Clay (&lt;0.002 mm).
+                </p>
+                <div style="font-size:0.8rem; background:var(--bg-main); padding:10px; border-radius:8px;">
+                    <strong>Agronomic Impact:</strong> Clays present high chemical storage arrays but compact readily. Sandy zones drain perfectly but cause extreme nutrient wash outs.
+                </div>
+                <span class="learn-more-link" onclick="openLearnMoreModal('texture')">Learn more ➔</span>
+            </div>
+            <div class="panel-box">
+                <span class="edu-badge badge-struct">Organic Matter</span>
+                <h3 style="font-size:1.2rem;">Humus Fractions & Soil Carbon</h3>
+                <p style="color: var(--text-muted); font-size: 0.9rem; line-height:1.6; margin-bottom:12px;">
+                    Soil Organic Matter (SOM) represents all biological materials including decomposed humus fragments, live root systems, and subterranean macrobial communities.</p>
+                <div style="font-size:0.8rem; background:var(--bg-main); padding:10px; border-radius:8px;">
+                    <strong>Agronomic Impact:</strong> Every 1% SOM addition enables topsoil profiles to capture 20,000 gallons of available water storage per acre.
+                </div>
+                <span class="learn-more-link" onclick="openLearnMoreModal('organic')">Learn more ➔</span>
+            </div>
+            <div class="panel-box">
+                <span class="edu-badge badge-struct">Salinity / EC</span>
+                <h3 style="font-size:1.2rem;">Soluble Salt Osmotic Fluxes</h3>
+                <p style="color: var(--text-muted); font-size: 0.9rem; line-height:1.6; margin-bottom:12px;">
+                    Salinity levels are tracked via active Electrical Conductivity (EC) metrics in deciSiemens per meter (dS/m) inside damp substrate profiles.</p>
+                <div style="font-size:0.8rem; background:var(--bg-main); padding:10px; border-radius:8px;">
+                    <strong>Agronomic Impact:</strong> Values over 4.0 dS/m invert root water attraction dynamics, drawing vital plant hydration backwards out into the dirt.
+                </div>
+                <span class="learn-more-link" onclick="openLearnMoreModal('salinity')">Learn more ➔</span>
+            </div>
+        </div>
+    </main>
+
+    <main id="analyzerPage" class="app-page">
+        <div id="analyzerAuthWall" class="panel-box security-gate" style="display: none;">
+            <span class="lock-icon">🔒</span>
+            <h2>Premium Analyzer Locked</h2>
+            <p style="color: var(--text-muted); margin-bottom: 24px; font-size: 0.9rem;">Subsurface trace mineral computational diagnostics and customized PDF reporting matrices are exclusively restricted to authenticated cloud profiles.</p>
+            <button class="action-btn" onclick="switchPage('login')">🔓 Route to Authentication Portal</button>
+        </div>
+
+        <div id="analyzerContent" class="analyzer-grid" style="display: none;">
+            <div class="panel-box">
+                <h2>Field Sample Analysis</h2>
+                <p style="color: var(--text-muted); margin-bottom: 20px; font-size:0.9rem;">Slide inputs to configure laboratory diagnostic readings.</p>
+                
+                <div class="form-group">
+                    <label>Soil pH Level</label>
+                    <div class="input-slider-wrapper">
+                        <input type="range" id="phInput" min="4.0" max="9.0" step="0.1" value="6.5" oninput="document.getElementById('phVal').textContent = this.value">
+                        <span class="slider-val" id="phVal">6.5</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Nitrogen Index (N) - ppm</label>
+                    <div class="input-slider-wrapper">
+                        <input type="range" id="nInput" min="0" max="150" step="5" value="45" oninput="document.getElementById('nVal').textContent = this.value + ' ppm'">
+                        <span class="slider-val" id="nVal">45 ppm</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Phosphorus Density (P) - ppm</label>
+                    <div class="input-slider-wrapper">
+                        <input type="range" id="pInput" min="0" max="100" step="5" value="30" oninput="document.getElementById('pVal').textContent = this.value + ' ppm'">
+                        <span class="slider-val" id="pVal">30 ppm</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Topsoil Volumetric Moisture (%)</label>
+                    <div class="input-slider-wrapper">
+                        <input type="range" id="moistureInput" min="0" max="100" step="1" value="55" oninput="document.getElementById('moistureVal').textContent = this.value + '%'">
+                        <span class="slider-val" id="moistureVal">55%</span>
+                    </div>
+                </div>
+
+                <button class="action-btn" onclick="executeSoilDiagnostics()">⚡ Compute Realtime Profiling Matrix</button>
+                <button class="action-btn" style="background: #475569; margin-top:12px;" onclick="downloadPDF()">📄 Export Soil Report PDF</button>
+            </div>
+
+            <div class="panel-box" id="resultsBox">
+                <h2>Diagnostic Report Engine</h2>
+                <p style="color: var(--text-muted); font-size: 0.95rem;">Configure your metrics and run the diagnostics engine to evaluate recommendations, hardware requirements, and mineral adjustments alongside data chart rendering visualization boxes.</p>
+            </div>
+        </div>
+    </main>
+
+    <main id="plannerPage" class="app-page">
+        <div id="plannerAuthWall" class="panel-box security-gate" style="display: none;">
+            <span class="lock-icon">🔒</span>
+            <h2>Crop Planner Access Restrained</h2>
+            <p style="color: var(--text-muted); margin-bottom: 24px; font-size: 0.9rem;">Algorithmic multi-season tracking calculations and organic replenishment schemes require persistent data bindings linked directly to verified accounts.</p>
+            <button class="action-btn" onclick="switchPage('login')">🔓 Route to Authentication Portal</button>
+        </div>
+
+        <div id="plannerContent" class="analyzer-grid" style="display: none;">
+            <div class="panel-box">
+                <h2>Algorithmic Rotation Calculator</h2>
+                <p style="color: var(--text-muted); margin-bottom: 20px; font-size:0.9rem;">Map sequential balancing cycles to sustain organic topsoil assets.</p>
+                
+                <div class="form-group">
+                    <label>Current Cultivation Focus</label>
+                    <select id="currentCropSelect" class="input-field">
+                        <option value="cereals">Cereals (Rice/Wheat) - High Nitrogen Consumers</option>
+                        <option value="oilseeds">Oilseeds (Mustard/Sunflower) - Medium Feeders</option>
+                        <option value="fibers">Fiber Crops (Cotton) - Deep Root Exhausters</option>
+                        <option value="legumes">Legumes & Pulses (Chickpeas/Lentils) - Nitrogen Fixers</option>
+                        <option value="rootveg">Root Vegetables (Carrots/Radishes) - Soil Looseners</option>
+                        <option value="cashcrops">Cash Crops (Sugarcane) - High Biomass Heavy Feeders</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Target Field Block Acreage</label>
+                    <input type="number" id="acreageInput" class="input-field" value="5" min="1">
+                </div>
+                
+                <button class="action-btn" onclick="calculateCropPlan()">⚙️ Generate Optimization Matrix</button>
+            </div>
+
+            <div class="panel-box" id="plannerOutputBox">
+                <h3>Rotation Structural Output</h3>
+                <p style="color: var(--text-muted); font-size: 0.95rem;">Submit current baseline parameters to initialize the structural field rotation scheduler framework logs.</p>
+            </div>
+        </div>
+    </main>
+
+    <main id="schemesPage" class="app-page">
+        <div class="panel-box">
+            <h2>Active National Agriculture Frameworks & Subsidies</h2>
+            <p style="color: var(--text-muted); margin-bottom: 24px; font-size: 0.95rem;">Direct tracking systems matching profile credentials to national subsidy databases.</p>
+            
+            <div class="grid-3">
+                <div class="panel-box" style="background:var(--bg-main); padding:20px; border-radius:12px; margin-bottom:0; justify-content: space-between;">
+                    <div>
+                        <span class="edu-badge badge-scheme">Direct Support</span>
+                        <h4 style="color:var(--primary); margin-bottom:8px; font-size:1.1rem;">PM-Kisan Samman Nidhi</h4>
+                        <p style="font-size:0.85rem; color:var(--text-muted); margin-top:6px; line-height: 1.5;">
+                            Income support plan providing <strong>₹6,000 per year</strong> in 3 equal installments directly to bank accounts. Linked with the Kisan Credit Card (KCC) program to offer low-interest short-term loans.
+                        </p>
+                    </div>
+                    <span class="learn-more-link" onclick="openLearnMoreModal('pmkisan')">View Rules & Criteria ➔</span>
+                </div>
+                <div class="panel-box" style="background:var(--bg-main); padding:20px; border-radius:12px; margin-bottom:0; justify-content: space-between;">
+                    <div>
+                        <span class="edu-badge badge-scheme">Diagnostics</span>
+                        <h4 style="color:var(--primary); margin-bottom:8px; font-size:1.1rem;">Soil Health Card Scheme</h4>
+                        <p style="font-size:0.85rem; color:var(--text-muted); margin-top:6px; line-height: 1.5;">
+                            Promotes target-specific nutrient management across India. Soils are audited across <strong>12 unique chemical/physical variables</strong> to provide custom laboratory-verified fertilizer recommendations.
+                        </p>
+                    </div>
+                    <span class="learn-more-link" onclick="openLearnMoreModal('shc')">View Rules & Criteria ➔</span>
+                </div>
+                <div class="panel-box" style="background:var(--bg-main); padding:20px; border-radius:12px; margin-bottom:0; justify-content: space-between;">
+                    <div>
+                        <span class="edu-badge badge-scheme">Risk Mitigation</span>
+                        <h4 style="color:var(--primary); margin-bottom:8px; font-size:1.1rem;">PM Fasal Bima Yojana (PMFBY)</h4>
+                        <p style="font-size:0.85rem; color:var(--text-muted); margin-top:6px; line-height: 1.5;">
+                            Comprehensive yield safeguard shielding fields against climate catastrophes. Features strict <strong>subsidized premium caps</strong> for farmers, utilizing satellite telemetry for processing claims.
+                        </p>
+                    </div>
+                    <span class="learn-more-link" onclick="openLearnMoreModal('pmfby')">View Rules & Criteria ➔</span>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div class="modal-overlay" id="eduModalOverlay" onclick="closeLearnMoreModal(event)">
+        <div class="modal-card" onclick="event.stopPropagation()">
+            <button class="modal-close-btn" onclick="hideModal()">✕</button>
+            <span class="edu-badge badge-struct" id="modalBadge">Agronomy Guide</span>
+            <h2 id="modalTitle" style="margin-top: 10px;">Deep Dive Analytics</h2>
+            <div class="modal-body" id="modalBody"></div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content" style="max-width:1200px; margin:0 auto; text-align:center; padding: 40px 16px;">
+            <h2 style="font-size: 1.4rem;">Questions or Support Requirements?</h2>
+            <p style="color: var(--text-muted); margin-bottom:166px; font-size: 0.9rem;">Connect with our lead systems research engineers for integration support or advice.</p>
+            <div style="display:flex; justify-content:center; gap:12px; font-weight:700; flex-wrap: wrap;">
+                <span style="background:rgba(21, 128, 61, 0.1); color:var(--primary); padding:6px 16px; border-radius:8px; font-size: 0.85rem;">Priyansh (Dev)</span>
+                <span style="background:rgba(21, 128, 61, 0.1); color:var(--primary); padding:6px 16px; border-radius:8px; font-size: 0.85rem;">M.Rishika (Dev)</span>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-analytics.js";
+
+        // Your complete, updated personal Firestore configuration keys
+        const firebaseConfig = {
+            apiKey: "AIzaSyD5Z-YNtCQBJWfvNIXSP7aXKOe7WldbaDY",
+            authDomain: "agrosoil-db.firebaseapp.com",
+            projectId: "agrosoil-db",
+            storageBucket: "agrosoil-db.firebasestorage.app",
+            messagingSenderId: "485211317368",
+            appId: "1:485211317368:web:8b9735a7f430967ef4798d",
+            measurementId: "G-6Q98TNWC3N"
+        };
+
+        // Initialize Firebase Services
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const analytics = getAnalytics(app); // Tracking operational telemetry metrics
+
+        let authMode = 'login';
+
+        window.handleAuthAction = async function() {
+            const userIn = document.getElementById('farmerName').value.trim();
+            const villageIn = document.getElementById('farmerVillage').value.trim();
+            const passIn = document.getElementById('farmerPass').value;
+            const actionBtn = document.getElementById('authActionButton');
+
+            if (!userIn || !villageIn || !passIn) {
+                alert('Validation Alert: All credential entry fields must be filled.');
+                return;
+            }
+
+            actionBtn.disabled = true;
+            actionBtn.textContent = "Connecting to Cloud Server...";
+
+            try {
+                // Documents stored uniquely by case-insensitive name indexes
+                const docRef = doc(db, "farmers", userIn.toLowerCase());
+                const docSnap = await getDoc(docRef);
+
+                if (authMode === 'login') {
+                    if (!docSnap.exists()) {
+                        alert('Authentication Denied: Username profile identifier not found in your database records.');
+                        return;
+                    }
+
+                    const serverData = docSnap.data();
+
+                    if (serverData.password !== passIn || serverData.village.toLowerCase() !== villageIn.toLowerCase()) {
+                        alert('Authentication Denied: Password or village credential mismatch configuration.');
+                        return;
+                    }
+
+                    // Success login branch execution path
+                    localStorage.setItem('cloud_farmer', serverData.username);
+                    localStorage.setItem('cloud_farmerRole', serverData.role || 'farmer');
+                    
+                    syncAuthUI();
+                    evaluateProtectedViews();
+                    alert(`Access Approved. Cloud Synced: Welcome back ${serverData.username}!`);
+                    clearAuthForm();
+                    switchPage('home');
+
+                } else {
+                    if (docSnap.exists()) {
+                        alert('Registration Conflict: This username identifier is already active inside the system database.');
+                        return;
+                    }
+
+                    let calculatedRole = "farmer";
+                    if(userIn.toLowerCase() === 'priyansh' || userIn.toLowerCase() === 'rishika') {
+                        calculatedRole = "developer";
+                    }
+
+                    const newProfile = {
+                        username: userIn,
+                        village: villageIn,
+                        password: passIn,
+                        role: calculatedRole,
+                        timestamp: new Date().toISOString()
+                    };
+
+                    await setDoc(docRef, newProfile);
+
+                    localStorage.setItem('cloud_farmer', userIn);
+                    localStorage.setItem('cloud_farmerRole', calculatedRole);
+
+                    syncAuthUI();
+                    evaluateProtectedViews();
+                    alert(`Cloud Registry Successful. Account initialized globally for ${userIn}.`);
+                    clearAuthForm();
+                    
+                    authMode = 'login';
+                    toggleAuthMode();
+                    switchPage('home');
+                }
+            } catch (error) {
+                console.error("Cloud database synchronization timeout error: ", error);
+                alert("Network Error: Cloud infrastructure sync failure. Using offline cached fallback mode.");
+                
+                // Fallback Mode if Firebase connectivity gets blocked
+                localStorage.setItem('cloud_farmer', userIn);
+                localStorage.setItem('cloud_farmerRole', 'farmer');
+                syncAuthUI();
+                evaluateProtectedViews();
+                switchPage('home');
+            } finally {
+                actionBtn.disabled = false;
+                if (authMode === 'login') {
+                    actionBtn.textContent = "☁️ Secure Cloud Verification";
+                } else {
+                    actionBtn.textContent = "✨ Register Cloud Profile";
+                }
+            }
+        };
+
+        window.logoutFarmer = function() {
+            localStorage.removeItem('cloud_farmer');
+            localStorage.removeItem('cloud_farmerRole');
+            syncAuthUI();
+            evaluateProtectedViews();
+            alert('Cloud profile disconnected. Switched to guest view.');
+            switchPage('home');
+        };
+
+        window.evaluateProtectedViews = function() {
+            const activeUser = localStorage.getItem('cloud_farmer');
+            const analyzerAuthWall = document.getElementById('analyzerAuthWall');
+            const analyzerContent = document.getElementById('analyzerContent');
+            const plannerAuthWall = document.getElementById('plannerAuthWall');
+            const plannerContent = document.getElementById('plannerContent');
+
+            if (activeUser) {
+                if(analyzerAuthWall) analyzerAuthWall.style.display = "none";
+                if(analyzerContent) analyzerContent.style.display = "grid";
+                if(plannerAuthWall) plannerAuthWall.style.display = "none";
+                if(plannerContent) plannerContent.style.display = "grid";
+            } else {
+                if(analyzerAuthWall) analyzerAuthWall.style.display = "block";
+                if(analyzerContent) analyzerContent.style.display = "none";
+                if(plannerAuthWall) plannerAuthWall.style.display = "block";
+                if(plannerContent) plannerContent.style.display = "none";
+            }
+        };
+
+        window.syncAuthUI = function() {
+            const activeUser = localStorage.getItem('cloud_farmer');
+            const activeRole = localStorage.getItem('cloud_farmerRole');
+            const navContainer = document.getElementById('navFarmerName');
+
+            if(activeUser) {
+                const isDev = activeRole === 'developer';
+                navContainer.innerHTML = `
+                    <span>☁️ ${activeUser}</span>
+                    <span class="role-badge ${isDev ? 'role-developer' : 'role-farmer'}">${isDev ? 'Dev' : 'Agri'}</span>
+                `;
+                document.getElementById('logoutBtn').style.display = "inline-block";
+                document.getElementById('loginBtn').style.display = "none";
+            } else {
+                navContainer.innerHTML = "";
+                document.getElementById('logoutBtn').style.display = "none";
+                document.getElementById('loginBtn').style.display = "inline-block";
+            }
+        };
+
+        window.toggleAuthMode = function() {
+            const title = document.getElementById('authTitle');
+            const subtitle = document.getElementById('authSubtitle');
+            const btn = document.getElementById('authActionButton');
+            const link = document.getElementById('authToggleLink');
+
+            if (authMode === 'login') {
+                authMode = 'signup';
+                title.textContent = "Global Cloud Registration";
+                subtitle.textContent = "Register your agricultural plot parameters to join our globally synchronized network.";
+                btn.textContent = "✨ Register Cloud Profile";
+                link.textContent = "Already have an account? Login here";
+            } else {
+                authMode = 'login';
+                title.textContent = "Farmer Cloud Login";
+                subtitle.textContent = "Cross-device agricultural tracking synced via global cloud endpoints.";
+                btn.textContent = "☁️ Secure Cloud Verification";
+                link.textContent = "Don't have an account? Sign Up here";
+            }
+        };
+
+        // Execution steps mapping on app boot up initialization
+        syncAuthUI();
+        evaluateProtectedViews();
+    </script>
+
+    <script>
+        function clearAuthForm() {
+            document.getElementById('farmerName').value = '';
+            document.getElementById('farmerVillage').value = '';
+            document.getElementById('farmerPass').value = '';
+        }
+
+        const modalContentDb = {
+            texture: {
+                title: "Understanding Soil Texture Fractions",
+                badge: "Physical Physics",
+                badgeClass: "badge-struct",
+                body: `<p>Soil texture describes the percentage configuration of Sand, Silt, and Clay. This physical structural balance cannot be easily altered mechanically and governs how water, air, and plant roots interact underground.</p>
+                    <div class="modal-section">
+                        <h4>Key Fractional Mechanics:</h4>
+                        <p style="margin-top:6px;"><strong>Loam sweet-spot:</strong> The premium agricultural configuration is Loam, matching approximately 40% Sand, 40% Silt, and 20% Clay to allow concurrent drainage and high Cation Exchange Capacities (CEC).</p>
+                    </div>`
+            },
+            organic: {
+                title: "Humus Fractions & Soil Organic Carbon (SOC)",
+                badge: "Substrate Biochemistry",
+                badgeClass: "badge-struct",
+                body: `<p>Soil Organic Matter (SOM) represents all biological materials including decomposed humus fragments, live root systems, and subterranean macrobial communities.</p>
+                    <div class="modal-section">
+                        <h4>The Hydrology Multiplication Factor:</h4>
+                        <p style="margin-top:6px;">Humus matrices behave like micro-sponges. For every 1% lift in Soil Organic Carbon metrics, topsoil can safely warehouse an additional 20,000 gallons of clean water per acre.</p>
+                    </div>`
+            },
+            salinity: {
+                title: "Soluble Salt Osmotic Fluxes & Electrical Conductivity",
+                badge: "Electrochemical Metrics",
+                badgeClass: "badge-struct",
+                body: `<p>Electrical Conductivity (EC) measures how easily electrical current flows through moisture in the soil, which correlates precisely with the amount of dissolved salts present.</p>
+                    <div class="modal-section">
+                        <h4>Osmotic Inversion Hazard:</h4>
+                        <p style="margin-top:6px;">When substrate EC exceeds 4.0 dS/m, osmotic pressure switches direction, causing water to be drawn <em>out</em> of plant tissues, creating chemical dehydration.</p>
+                    </div>`
+            },
+            pmkisan: { 
+                title: "Pradhan Mantri Kisan Samman Nidhi (PM-KISAN)", 
+                badge: "Direct Support Infrastructure", 
+                badgeClass: "badge-scheme", 
+                body: `<p>PM-Kisan is a 100% Central Sector Scheme designed to supplement the financial input needs of domestic landholding farmer families across India, bypassing intermediate transaction points through Direct Benefit Transfer (DBT).</p>
+                    <div class="modal-section">
+                        <h4>📋 Core Policy Operational Structures:</h4>
+                        <ul>
+                            <li><strong>Financial Quantum:</strong> An assured allocation of <strong>₹6,000 per annum</strong> is awarded per family unit.</li>
+                            <li><strong>Disbursement Cadence:</strong> Divided into 3 equal payouts distributed every 4 months.</li>
+                            <li><strong>KCC Structural Integration:</strong> Directly linked with the <strong>Kisan Credit Card (KCC)</strong> mechanism, allowing low concessional interest loans.</li>
+                        </ul>
+                    </div>` 
+            },
+            shc: { 
+                title: "National Soil Health Card (SHC) Program", 
+                badge: "Substrate Diagnostics", 
+                badgeClass: "badge-scheme", 
+                body: `<p>The Soil Health Card Scheme tracks systemic macro and microelement trends, helping optimize mineral choices and lower production expenditures.</p>
+                    <div class="modal-section">
+                        <h4>🔬 Detailed 12-Parameter Testing Framework:</h4>
+                        <ul>
+                            <li><strong>Macro Nutrients:</strong> Nitrogen (N), Phosphorus (P), Potassium (K)</li>
+                            <li><strong>Secondary/Micro Nutrients:</strong> Sulphur (S), Zinc (Zn), Iron (Fe), Copper (Cu), Manganese (Mn), Boron (Bo)</li>
+                            <li><strong>Physical Parameters:</strong> pH, EC, Organic Carbon (OC)</li>
+                        </ul>
+                    </div>` 
+            },
+            pmfby: { 
+                title: "Pradhan Mantri Fasal Bima Yojana (PMFBY)", 
+                badge: "Risk Mitigation Channels", 
+                badgeClass: "badge-scheme", 
+                body: `<p>PMFBY delivers an affordable, yield-focused insurance safety net protecting agriculturalists against unpreventable localized natural perils and weather anomalies.</p>
+                    <div class="modal-section">
+                        <h4>📊 Standardized Uniform Premium Structures:</h4>
+                        <ul>
+                            <li><strong>Kharif Crops:</strong> Max cap of <strong>2.0%</strong> of sum insured.</li>
+                            <li><strong>Rabi Crops:</strong> Max cap of <strong>1.5%</strong> of sum insured.</li>
+                            <li><strong>Horticultural rows:</strong> Max cap of <strong>5.0%</strong> of sum insured.</li>
+                        </ul>
+                    </div>` 
+            }
+        };
+
+        function openLearnMoreModal(type) {
+            const data = modalContentDb[type];
+            if(!data) return;
+            document.getElementById('modalTitle').textContent = data.title;
+            document.getElementById('modalBody').innerHTML = data.body;
+            const badge = document.getElementById('modalBadge');
+            badge.textContent = data.badge;
+            badge.className = "edu-badge " + data.badgeClass;
+            document.getElementById('eduModalOverlay').classList.add('active');
+        }
+
+        function hideModal() { document.getElementById('eduModalOverlay').classList.remove('active'); }
+        function closeLearnMoreModal(event) { if(event.target.id === 'eduModalOverlay') hideModal(); }
+
+        function switchPage(pageId) {
+            document.querySelectorAll('.app-page').forEach(page => page.classList.remove('active-page'));
+            document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active-nav'));
+            const targetPage = document.getElementById(pageId + 'Page');
+            if (targetPage) targetPage.classList.add('active-page');
+            const targetBtn = document.getElementById('btn-' + pageId);
+            if (targetBtn) targetBtn.classList.add('active-nav');
+            window.scrollTo(0,0);
+        }
+
+        function toggleDarkMode() { document.body.classList.toggle('dark'); }
+
+        let currentCarouselIdx = 0;
+        setInterval(() => {
+            const items = document.querySelectorAll('.carousel-item');
+            if(!items.length) return;
+            items[currentCarouselIdx].classList.remove('active');
+            currentCarouselIdx = (currentCarouselIdx + 1) % items.length;
+            items[currentCarouselIdx].classList.add('active');
+        }, 6000);
+
+        function executeSoilDiagnostics() {
+            const ph = parseFloat(document.getElementById('phInput').value);
+            const n = parseInt(document.getElementById('nInput').value);
+            const p = parseInt(document.getElementById('pInput').value);
+
+            let phStatus = (ph < 6.0) ? 'Acidic' : (ph > 7.5) ? 'Alkaline' : 'Optimal';
+            let nClass = (n < 30) ? 'level-low' : (n > 80) ? 'level-high' : 'level-optimal';
+            let pClass = (p < 20) ? 'level-low' : (p > 60) ? 'level-high' : 'level-optimal';
+
+            let fixRecommendationsHTML = "";
+            
+            if (ph < 6.0) {
+                fixRecommendationsHTML += `
+                    <div class="report-metric level-fix">
+                        <h4>🔧 Substrate Fix: Counteract Acidic pH</h4>
+                        <p>Apply <strong>Agricultural Limestone (Calcium Carbonate)</strong> to lift baseline properties securely.</p>
+                    </div>`;
+            } else if (ph > 7.5) {
+                fixRecommendationsHTML += `
+                    <div class="report-metric level-fix">
+                        <h4>🔧 Substrate Fix: Counteract Alkaline pH</h4>
+                        <p>Incorporate <strong>Elemental Sulfur</strong> to neutralize alkali salt blockings slowly.</p>
+                    </div>`;
+            }
+
+            if (n < 30) {
+                fixRecommendationsHTML += `
+                    <div class="report-metric level-fix">
+                        <h4>🔧 Substrate Fix: Replenish Deficient Nitrogen</h4>
+                        <p>Incorporate <strong>Organic Poultry Compost</strong> or map clover cover crops.</p>
+                    </div>`;
+            }
+
+            if (fixRecommendationsHTML === "") {
+                fixRecommendationsHTML = `
+                    <div class="report-metric level-optimal">
+                        <h4>🏅 Substrate Balance: Excellent Chemical Equilibrium</h4>
+                        <p>No immediate mineral adjustments required.</p>
+                    </div>`;
+            }
+
+            document.getElementById('resultsBox').innerHTML = `
+                <h2>Diagnostic Report Matrix</h2>
+                <div style="margin-bottom: 24px; background:var(--bg-main); padding:16px; border-radius:12px; height: 220px; position: relative;">
+                    <canvas id="soilChart"></canvas>
+                </div>
+                <div class="report-metric ${phStatus === 'Optimal' ? 'level-optimal' : 'level-high'}">
+                    <h4>Substrate Reaction: ${phStatus} Alignment (${ph} pH)</h4>
+                </div>
+                <div class="report-metric ${nClass}">
+                    <h4>Nitrogen Indexing: ${nClass.replace('level-', '').toUpperCase()} (${n} ppm)</h4>
+                </div>
+                
+                <h3 style="margin-top: 24px; margin-bottom: 12px;">🛠️ AI Soil Remediation Plan</h3>
+                ${fixRecommendationsHTML}
+            `;
+
+            setTimeout(() => {
+                const ctx = document.getElementById('soilChart');
+                new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Nitrogen', 'Phosphorus', 'pH'],
+                        datasets: [{
+                            data: [n, p, ph],
+                            backgroundColor: ['#2563eb', '#ea580c', '#6b21a8'],
+                            borderRadius: 6
+                        }]
+                    },
+                    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } }
+                });
+            }, 50);
+        }
+
+        function calculateCropPlan() {
+            const current = document.getElementById('currentCropSelect').value;
+            const acreage = document.getElementById('acreageInput').value;
+            const box = document.getElementById('plannerOutputBox');
+            
+            let rotation = current === 'cereals' ? "Legumes & Pulses (Chickpeas, Clover) 🫘" : "Deep-Root Scavengers (Daikon Radish) 🥕";
+            
+            box.innerHTML = `
+                <h3>Rotation Structural Output</h3>
+                <p style="margin:12px 0; color:var(--text-muted); font-size:0.95rem;">Calculated scheme tailored for <strong>${acreage} Acres</strong>:</p>
+                <div class="report-metric level-optimal" style="border-left-color: var(--primary); margin-bottom: 20px;">
+                    <h4>Recommended Secondary Rotation:</h4>
+                    <h3 style="color: var(--primary); margin: 6px 0;">${rotation}</h3>
+                </div>
+            `;
+        }
+
+        async function downloadPDF() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            doc.setFontSize(22);
+            doc.setTextColor(21, 128, 61);
+            doc.text('AgroSoil AI Cloud Report', 20, 24);
+            doc.setFontSize(12);
+            doc.text(`Generated Sync Timestamp: ${new Date().toLocaleString()}`, 20, 40);
+            doc.save('agrosoil-cloud-report.pdf');
+        }
+    </script>
+</body>
+</html>
