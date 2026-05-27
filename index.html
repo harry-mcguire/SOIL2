@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AgroSoil AI | Cloud Connected Agriculture Suite</title>
+    <title>AgroSoil AI | Advanced Agriculture Suite</title>
     <style>
         /* Modern Reset and Typography */
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght=400;500;600;700;800&display=swap');
@@ -139,16 +139,6 @@
             flex-shrink: 0;
         }
 
-        .role-badge {
-            font-size: 0.75rem;
-            font-weight: 800;
-            padding: 4px 10px;
-            border-radius: 6px;
-            text-transform: uppercase;
-        }
-        .role-developer { background-color: #d97706; color: #ffffff; }
-        .role-farmer { background-color: var(--primary); color: #ffffff; }
-
         .app-page {
             display: none;
             animation: fadeInPage 0.4s ease forwards;
@@ -235,18 +225,6 @@
             display: inline-flex; align-items: center; justify-content: center; gap: 8px; margin-top: auto;
         }
         .action-btn:hover { transform: translateY(-1px); box-shadow: 0 6px 16px rgba(21, 128, 61, 0.3); }
-        .action-btn:disabled { background: #94a3b8; cursor: not-allowed; box-shadow: none; }
-
-        .toggle-auth-mode {
-            color: var(--primary);
-            font-weight: 700;
-            font-size: 0.9rem;
-            text-align: center;
-            margin-top: 16px;
-            cursor: pointer;
-            text-decoration: none;
-        }
-        .toggle-auth-mode:hover { text-decoration: underline; }
 
         .learn-more-link {
             color: var(--primary);
@@ -289,10 +267,6 @@
         .carousel-item { min-width: 100%; display: none; font-weight: 600; font-size: 0.95rem; line-height: 1.5; }
         @media (min-width: 768px) { .carousel-item { font-size: 1.05rem; } }
         .carousel-item.active { display: block; animation: fadeInPage 0.5s ease; }
-
-        .security-gate { text-align: center; max-width: 500px; margin: 40px auto; padding: 30px 20px; }
-        .lock-icon { font-size: 3.5rem; margin-bottom: 16px; display: inline-block; animation: pulseLock 2s infinite ease-in-out; }
-        @keyframes pulseLock { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.08); } }
 
         /* Modern Educational Modal Styles */
         .modal-overlay {
@@ -343,7 +317,7 @@
             .nav-container { flex-direction: column; align-items: stretch; padding: 12px 16px; gap: 12px; }
             .logo { justify-content: center; }
             .nav-links { justify-content: flex-start; padding-bottom: 4px; }
-            .nav-right { justify-content: space-between; border-top: 1px solid var(--border); padding-top: 10px; }
+            .nav-right { justify-content: center; border-top: 1px solid var(--border); padding-top: 10px; }
         }
     </style>
 </head>
@@ -359,36 +333,10 @@
                 <button class="nav-btn" id="btn-schemes" onclick="switchPage('schemes')">Govt Schemes</button>
             </div>
             <div class="nav-right">
-                <span id="navFarmerName" style="font-weight: 700; color: var(--text-dark); display: flex; align-items: center; gap: 8px; font-size: 0.9rem;"></span>
-                <button class="utility-btn" id="logoutBtn" style="display:none;" onclick="logoutFarmer()">Logout</button>
-                <button class="utility-btn" id="loginBtn" onclick="switchPage('login')">Login / Sign Up</button>
                 <button class="dark-toggle-btn" onclick="toggleDarkMode()">🌙</button>
             </div>
         </div>
     </nav>
-
-    <main id="loginPage" class="app-page">
-        <div class="panel-box" style="max-width:450px; margin: 40px auto;">
-            <h2 id="authTitle" style="text-align: center;">Farmer Cloud Login</h2>
-            <p id="authSubtitle" style="color: var(--text-muted); text-align: center; margin-bottom: 24px; font-size: 0.9rem;">Cross-device agricultural tracking synced via global cloud endpoints.</p>
-            
-            <div class="form-group">
-                <label>Farmer Name / Username</label>
-                <input type="text" id="farmerName" class="input-field" placeholder="Enter Username">
-            </div>
-            <div class="form-group">
-                <label>Village Name</label>
-                <input type="text" id="farmerVillage" class="input-field" placeholder="Enter Local Village">
-            </div>
-            <div class="form-group">
-                <label>Security Password</label>
-                <input type="password" id="farmerPass" class="input-field" placeholder="••••••••">
-            </div>
-            
-            <button id="authActionButton" class="action-btn" onclick="handleAuthAction()">☁️ Secure Cloud Verification</button>
-            <a id="authToggleLink" class="toggle-auth-mode" onclick="toggleAuthMode()">Don't have an account? Sign Up here</a>
-        </div>
-    </main>
 
     <main id="homePage" class="app-page active-page">
         <div id="seasonalAlertBox">
@@ -411,7 +359,7 @@
             <h1 class="hero-title">Predictive Agriculture Analytics</h1>
             <p class="hero-subtitle">Harnessing AI Cloud Frameworks for Crop Longevity</p>
             <p style="max-width: 750px; margin: 0 auto; color: var(--text-muted); font-size: 0.95rem;">
-                Welcome to an integrated agronomy interface. Map environmental data metrics, trace field chemical behaviors, and implement dynamic configurations across all your devices.
+                Welcome to an integrated agronomy interface. Map environmental data metrics, trace field chemical behaviors, and implement dynamic configurations instantly across all your systems.
             </p>
         </header>
 
@@ -452,14 +400,7 @@
     </main>
 
     <main id="analyzerPage" class="app-page">
-        <div id="analyzerAuthWall" class="panel-box security-gate" style="display: none;">
-            <span class="lock-icon">🔒</span>
-            <h2>Premium Analyzer Locked</h2>
-            <p style="color: var(--text-muted); margin-bottom: 24px; font-size: 0.9rem;">Subsurface trace mineral computational diagnostics and customized PDF reporting matrices are exclusively restricted to authenticated cloud profiles.</p>
-            <button class="action-btn" onclick="switchPage('login')">🔓 Route to Authentication Portal</button>
-        </div>
-
-        <div id="analyzerContent" class="analyzer-grid" style="display: none;">
+        <div class="analyzer-grid">
             <div class="panel-box">
                 <h2>Field Sample Analysis</h2>
                 <p style="color: var(--text-muted); margin-bottom: 20px; font-size:0.9rem;">Slide inputs to configure laboratory diagnostic readings.</p>
@@ -505,14 +446,7 @@
     </main>
 
     <main id="plannerPage" class="app-page">
-        <div id="plannerAuthWall" class="panel-box security-gate" style="display: none;">
-            <span class="lock-icon">🔒</span>
-            <h2>Crop Planner Access Restrained</h2>
-            <p style="color: var(--text-muted); margin-bottom: 24px; font-size: 0.9rem;">Algorithmic multi-season tracking calculations and organic replenishment schemes require persistent data bindings linked directly to verified accounts.</p>
-            <button class="action-btn" onclick="switchPage('login')">🔓 Route to Authentication Portal</button>
-        </div>
-
-        <div id="plannerContent" class="analyzer-grid" style="display: none;">
+        <div class="analyzer-grid">
             <div class="panel-box">
                 <h2>Algorithmic Rotation Calculator</h2>
                 <p style="color: var(--text-muted); margin-bottom: 20px; font-size:0.9rem;">Map sequential balancing cycles to sustain organic topsoil assets.</p>
@@ -608,10 +542,10 @@
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+        import { getFirestore } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
         import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-analytics.js";
 
-        // Your complete, updated personal Firestore configuration keys
+        // Your complete personal Firestore configuration keys
         const firebaseConfig = {
             apiKey: "AIzaSyD5Z-YNtCQBJWfvNIXSP7aXKOe7WldbaDY",
             authDomain: "agrosoil-db.firebaseapp.com",
@@ -626,186 +560,9 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
         const analytics = getAnalytics(app); // Tracking operational telemetry metrics
-
-        let authMode = 'login';
-
-        window.handleAuthAction = async function() {
-            const userIn = document.getElementById('farmerName').value.trim();
-            const villageIn = document.getElementById('farmerVillage').value.trim();
-            const passIn = document.getElementById('farmerPass').value;
-            const actionBtn = document.getElementById('authActionButton');
-
-            if (!userIn || !villageIn || !passIn) {
-                alert('Validation Alert: All credential entry fields must be filled.');
-                return;
-            }
-
-            actionBtn.disabled = true;
-            actionBtn.textContent = "Connecting to Cloud Server...";
-
-            try {
-                // Documents stored uniquely by case-insensitive name indexes
-                const docRef = doc(db, "farmers", userIn.toLowerCase());
-                const docSnap = await getDoc(docRef);
-
-                if (authMode === 'login') {
-                    if (!docSnap.exists()) {
-                        alert('Authentication Denied: Username profile identifier not found in your database records.');
-                        return;
-                    }
-
-                    const serverData = docSnap.data();
-
-                    if (serverData.password !== passIn || serverData.village.toLowerCase() !== villageIn.toLowerCase()) {
-                        alert('Authentication Denied: Password or village credential mismatch configuration.');
-                        return;
-                    }
-
-                    // Success login branch execution path
-                    localStorage.setItem('cloud_farmer', serverData.username);
-                    localStorage.setItem('cloud_farmerRole', serverData.role || 'farmer');
-                    
-                    syncAuthUI();
-                    evaluateProtectedViews();
-                    alert(`Access Approved. Cloud Synced: Welcome back ${serverData.username}!`);
-                    clearAuthForm();
-                    switchPage('home');
-
-                } else {
-                    if (docSnap.exists()) {
-                        alert('Registration Conflict: This username identifier is already active inside the system database.');
-                        return;
-                    }
-
-                    let calculatedRole = "farmer";
-                    if(userIn.toLowerCase() === 'priyansh' || userIn.toLowerCase() === 'rishika') {
-                        calculatedRole = "developer";
-                    }
-
-                    const newProfile = {
-                        username: userIn,
-                        village: villageIn,
-                        password: passIn,
-                        role: calculatedRole,
-                        timestamp: new Date().toISOString()
-                    };
-
-                    await setDoc(docRef, newProfile);
-
-                    localStorage.setItem('cloud_farmer', userIn);
-                    localStorage.setItem('cloud_farmerRole', calculatedRole);
-
-                    syncAuthUI();
-                    evaluateProtectedViews();
-                    alert(`Cloud Registry Successful. Account initialized globally for ${userIn}.`);
-                    clearAuthForm();
-                    
-                    authMode = 'login';
-                    toggleAuthMode();
-                    switchPage('home');
-                }
-            } catch (error) {
-                console.error("Cloud database synchronization timeout error: ", error);
-                alert("Network Error: Cloud infrastructure sync failure. Using offline cached fallback mode.");
-                
-                // Fallback Mode if Firebase connectivity gets blocked
-                localStorage.setItem('cloud_farmer', userIn);
-                localStorage.setItem('cloud_farmerRole', 'farmer');
-                syncAuthUI();
-                evaluateProtectedViews();
-                switchPage('home');
-            } finally {
-                actionBtn.disabled = false;
-                if (authMode === 'login') {
-                    actionBtn.textContent = "☁️ Secure Cloud Verification";
-                } else {
-                    actionBtn.textContent = "✨ Register Cloud Profile";
-                }
-            }
-        };
-
-        window.logoutFarmer = function() {
-            localStorage.removeItem('cloud_farmer');
-            localStorage.removeItem('cloud_farmerRole');
-            syncAuthUI();
-            evaluateProtectedViews();
-            alert('Cloud profile disconnected. Switched to guest view.');
-            switchPage('home');
-        };
-
-        window.evaluateProtectedViews = function() {
-            const activeUser = localStorage.getItem('cloud_farmer');
-            const analyzerAuthWall = document.getElementById('analyzerAuthWall');
-            const analyzerContent = document.getElementById('analyzerContent');
-            const plannerAuthWall = document.getElementById('plannerAuthWall');
-            const plannerContent = document.getElementById('plannerContent');
-
-            if (activeUser) {
-                if(analyzerAuthWall) analyzerAuthWall.style.display = "none";
-                if(analyzerContent) analyzerContent.style.display = "grid";
-                if(plannerAuthWall) plannerAuthWall.style.display = "none";
-                if(plannerContent) plannerContent.style.display = "grid";
-            } else {
-                if(analyzerAuthWall) analyzerAuthWall.style.display = "block";
-                if(analyzerContent) analyzerContent.style.display = "none";
-                if(plannerAuthWall) plannerAuthWall.style.display = "block";
-                if(plannerContent) plannerContent.style.display = "none";
-            }
-        };
-
-        window.syncAuthUI = function() {
-            const activeUser = localStorage.getItem('cloud_farmer');
-            const activeRole = localStorage.getItem('cloud_farmerRole');
-            const navContainer = document.getElementById('navFarmerName');
-
-            if(activeUser) {
-                const isDev = activeRole === 'developer';
-                navContainer.innerHTML = `
-                    <span>☁️ ${activeUser}</span>
-                    <span class="role-badge ${isDev ? 'role-developer' : 'role-farmer'}">${isDev ? 'Dev' : 'Agri'}</span>
-                `;
-                document.getElementById('logoutBtn').style.display = "inline-block";
-                document.getElementById('loginBtn').style.display = "none";
-            } else {
-                navContainer.innerHTML = "";
-                document.getElementById('logoutBtn').style.display = "none";
-                document.getElementById('loginBtn').style.display = "inline-block";
-            }
-        };
-
-        window.toggleAuthMode = function() {
-            const title = document.getElementById('authTitle');
-            const subtitle = document.getElementById('authSubtitle');
-            const btn = document.getElementById('authActionButton');
-            const link = document.getElementById('authToggleLink');
-
-            if (authMode === 'login') {
-                authMode = 'signup';
-                title.textContent = "Global Cloud Registration";
-                subtitle.textContent = "Register your agricultural plot parameters to join our globally synchronized network.";
-                btn.textContent = "✨ Register Cloud Profile";
-                link.textContent = "Already have an account? Login here";
-            } else {
-                authMode = 'login';
-                title.textContent = "Farmer Cloud Login";
-                subtitle.textContent = "Cross-device agricultural tracking synced via global cloud endpoints.";
-                btn.textContent = "☁️ Secure Cloud Verification";
-                link.textContent = "Don't have an account? Sign Up here";
-            }
-        };
-
-        // Execution steps mapping on app boot up initialization
-        syncAuthUI();
-        evaluateProtectedViews();
     </script>
 
     <script>
-        function clearAuthForm() {
-            document.getElementById('farmerName').value = '';
-            document.getElementById('farmerVillage').value = '';
-            document.getElementById('farmerPass').value = '';
-        }
-
         const modalContentDb = {
             texture: {
                 title: "Understanding Soil Texture Fractions",
@@ -1012,10 +769,10 @@
             const doc = new jsPDF();
             doc.setFontSize(22);
             doc.setTextColor(21, 128, 61);
-            doc.text('AgroSoil AI Cloud Report', 20, 24);
+            doc.text('AgroSoil AI Report', 20, 24);
             doc.setFontSize(12);
-            doc.text(`Generated Sync Timestamp: ${new Date().toLocaleString()}`, 20, 40);
-            doc.save('agrosoil-cloud-report.pdf');
+            doc.text(`Generated Timestamp: ${new Date().toLocaleString()}`, 20, 40);
+            doc.save('agrosoil-report.pdf');
         }
     </script>
 </body>
